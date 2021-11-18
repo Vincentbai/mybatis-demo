@@ -1,0 +1,32 @@
+mybaits 搭建过程
+1. 导入jar包
+2. 创建mybatis的核心（全局）配置文件 mybaties-conf.xml：如何连接数据库
+3. 创建映射文件 xxxMapper.xml，并配置：如何操作数据库
+4. 创建mapper接口：mybatis 面向接口编程
+5. 获取mybatis操作数据库的会话对象 sqlSession，通过getMapper()方法获取接口的动态代理实现类
+6. 测试
+
+mybatis 获取参数的两种方法
+#{}： insert into emp values(null, 'HR', 23, 'Female')
+PreparedStatment：可以使用通配符的方式操作sql，不需要注意单引号问题，因为为string赋值的时候会自动添加单引号
+${}： insert into emp values(null, ?, ?, ?)
+Statemnet: 必须使用字符串拼接的方式操作sql，一定要注意单引号问题
+使用建议：建议使用#{}, 在特殊情况下使用${}, 比如模糊查询和批量删除
+
+不同的参数类型，${} 和 #{} 不同的取值方式：
+1。 当传输参数为单个string或者基本数据类型时和其包装类时：
+#{} 可以通过任意的名字来获取参数
+${} 只能通过value和_parameter 来获取
+2。 当传输的参数为java bean时
+都可以通过属性名来直接获取属性值，但是${}要注意加单引号问题
+3。 当传输多个参数的时候，mybatis会将这些参数放入到map集合中，两种方式获取值
+（1）通过 0 1 2 3 4 5。。。 n
+（2）通过 param1 param2， param3，param4
+#{}: #{0} #{1} / #{param1} #{param2}
+${}: ${param1} ${param2} 注意单引号问题
+4。当传入的参数为map<String, Object>时，可以通过map的键来获取参数，${} 注意单引号问题
+5。命名参数，通过@Param("key")的方式为map集合指定键的名字
+Emp getEmpByEidAndEnameByParam(@Param("eid") String eid, @Param("ename") String ename);
+#{} ${} 可以通过设定键的名字来获取参数，${}得注意单引号问题
+6。当传入当参数为list或者array，mybatis会将list和array放在map中，
+List类型的参数以list为键，Array类型的参数以array为键，通过动态sql语句去实现数组？

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="au.com.vincentbai.mapper.ParamMapper">
+
+    <!--    void insertEmp(Emp emp); useGeneratedKeys="true" 是默认添加的，　keyProperty是将新生成的id放在emp的eid中 -->
+    <insert id="insertEmp" useGeneratedKeys="true" keyProperty="eid">
+       <!--insert into emp values(null, #{ename}, #{age}, #{gender})-->
+        insert into emp values(null, '${ename}', ${age}, '${gender}')
+    </insert>
+
+    <!--    Emp getEmpByEid(int eid); -->
+    <select id="getEmpByEid" resultType="au.com.vincentbai.bean.Emp">
+<!--         select * from emp where eid = #{anyword}
+      ${eid}报错：There is no getter for property named 'eid' in 'class java.lang.String'
+       分析${eid} ${} 会默认将传入的参数看作为实体类型，所有想通过 eid.getEid(); 来获取属性
+       正确的方法是写入value获取_parameter -->
+         select * from emp where eid = ${_parameter}
+
+    </select>
+
+    <!--Emp getEmpByEidAndEname(String eid, String ename);-->
+    <select id="getEmpByEidAndEname" resultType="au.com.vincentbai.bean.Emp">
+        <!-- 当传入多个参数的时候，不能直接使用之前的变量名来取值，只能通过0，1 / param1， param2
+            因为当传入多个参数的时候，mybatis会将这些参数都封装到一个map中，键为 0，1/param1， param2
+            ${} 不可以使用0，1，只能使用param1/param2
+        -->
+        select * from emp where eid = '${param1}' and ename = '${param2}'
+    </select>
+
+    <!-- Emp getEmpByMap(Map<String,Object> map); -->
+    <select id="getEmpByMap" resultType="au.com.vincentbai.bean.Emp">
+        select * from emp where eid = ${eid} and ename = '${ename}'
+    </select>
+
+    <!-- Emp getEmpByEidAndEnameByParam(@Param("eid") String eid, @Param("ename") String ename);-->
+    <select id="getEmpByEidAndEnameByParam" resultType="au.com.vincentbai.bean.Emp">
+        select * from emp where eid = #{eid} and ename = #{ename}
+    </select>
+
+</mapper>

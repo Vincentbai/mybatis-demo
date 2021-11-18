@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 绑定接口名-->
+<mapper namespace="au.com.vincentbai.mapper.EmpSelectMapper">
+
+<!--    Emp getEmpByEid(String eid);-->
+    <select id="getEmpByEid" resultType="au.com.vincentbai.bean.Emp">
+        select * from emp where eid = #{eid}
+    </select>
+
+<!--    Integer getCount();-->
+    <select id="getCount" resultType="Integer">
+        select count(eid) from emp
+    </select>
+
+<!--    getEmpMapByEid(String eid);-->
+    <select id="getEmpMapByEid" resultType="java.util.HashMap">
+        select * from emp where eid = #{eid}
+    </select>
+
+<!--    getAllEmpMap();-->
+    <select id="getAllEmpMap" resultType="hashMap">
+        select * from emp
+    </select>
+
+</mapper>

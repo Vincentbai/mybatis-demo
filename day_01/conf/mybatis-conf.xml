@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--  configuration中的标签是有顺序的，如果不对报错  -->
+
+<!--    <properties>
+            <property name="jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        </properties>
+-->
+    <properties resource="jdbc.properties" />
+    
+    <settings>
+        <!--  将数据库中user_name转换成userName，尽量不要使用，将属性名和字段名设置成一样的     -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <!--  在UserMapper.xml中 resultType中就可以直接写个User或者user
+            但是不建议使用，不清楚
+        -->
+<!--        <typeAlias type="au.com.vincentbai.bean.User" />-->
+        <!--  将包下所有的类都声明个别名，不建议使用      -->
+<!--        <package name="au.com.vincentbai.bean"/>-->
+    </typeAliases>
+
+    <!--
+      environments标签：设置连接数据库的环境
+      default属性来设置默认使用的数据库环境
+    -->
+    <environments default="mysql">
+        <!--
+            environment设置某个具体的数据库环境
+        -->
+        <environment id="mysql">
+            <!--    type: JDBC / MANAGED        -->
+            <transactionManager type="JDBC"/>
+            <!--    type: POOLED / UNPOOLED / JDNI    -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm"/>
+                <property name="username" value="root"/>
+                <property name="password" value="toor"/>
+            </dataSource>
+        </environment>
+
+        <environment id="oracle">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm"/>
+                <property name="username" value="root"/>
+                <property name="password" value="toor"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="UserMapper.xml"/>
+    </mappers>
+</configuration>

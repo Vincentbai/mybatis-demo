@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 绑定接口名-->
+<mapper namespace="au.com.vincentbai.mapper.EmpMapper">
+
+    <!--    Emp getEmpByEid(String eid); -->
+    <select id="getEmpByEid" resultType="au.com.vincentbai.bean.Emp">
+        select * from emp where eid = #{eid}
+    </select>
+
+    <!--  List<Emp> getAllEmps();  -->
+    <select id="getAllEmps" resultType="au.com.vincentbai.bean.Emp">
+        select * from emp
+    </select>
+
+    <!--  void addEmp(Emp emp); 增删改有返回接口，受影响的行数，int or boolean -->
+    <insert id="addEmp">
+        insert into emp value(null, #{ename}, #{age}, #{gender})
+    </insert>
+
+    <!--  void updateEmp(Emp emp);  -->
+    <update id="updateEmp">
+        update emp set ename = #{ename} , age = #{age}, gender = #{gender} where eid = #{eid}
+    </update>
+
+    <!--  void delEmp(String eid);  -->
+    <delete id="delEmp">
+        delete from emp where eid = #{eid}
+    </delete>
+
+
+</mapper>

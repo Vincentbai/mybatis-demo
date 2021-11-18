@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 绑定接口名-->
+<mapper namespace="au.com.vincentbai.mapper.UserMapper">
+
+    <!--  绑定方法名, ${id} 字符串拼接 模糊查询和批量删除 #{id} -->
+    <select id="getUserByUid" resultType="au.com.vincentbai.bean.User">
+        select * from user where uid = #{id}
+    </select>
+
+</mapper>
